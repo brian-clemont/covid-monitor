@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { PatientService } from 'src/app/services/patient.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Patient } from '../patient.model';
+import { Patient, StatusEnum ,AddressEnum} from '../patient.model';
 
 @Component({
   selector: 'app-add-patient',
@@ -15,11 +15,20 @@ export class AddPatientComponent implements OnInit {
   mode = 'add';
   patientId: string;
   patientStatus = [
-    { id: 1, status: 'mild' },
-    { id: 2, status: 'moderate' },
-    { id: 3, status: 'critical' },
-    { id: 4, status: 'recovered' },
-    { id: 5, status: 'deceased' },
+    { id: 1, status: StatusEnum.MILD },
+    { id: 2, status: StatusEnum.MODERATE },
+    { id: 3, status: StatusEnum.CRITICAL },
+    { id: 4, status: StatusEnum.RECOVERED },
+    { id: 5, status: StatusEnum.DECEASED },
+  ];
+  addresses = [
+    { id: 1, address: AddressEnum.MAPUSA },
+    { id: 2, address: AddressEnum.MARGAO },
+    { id: 3, address: AddressEnum.PANJIM },
+    { id: 4, address: AddressEnum.PONDA },
+    { id: 5, address: AddressEnum.QUEPEM },
+    { id: 6, address: AddressEnum.VALPOI },
+    { id: 7, address: AddressEnum.VASCO },
   ];
   constructor(
     private patientService: PatientService,
@@ -28,27 +37,25 @@ export class AddPatientComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl('Patient', {
+      name: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)],
       }),
-      address: new FormControl('Mangor hill', {
+      address: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(5)],
       }),
-      age: new FormControl(33, {
-        validators: [Validators.required, Validators.maxLength(3)],
+      age: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(1)],
       }),
-      familyCount: new FormControl(5, {
-        validators: [Validators.required, Validators.maxLength(2)],
+      familyCount: new FormControl(null, {
+        validators: [Validators.required, Validators.maxLength(1)],
       }),
-      phone: new FormControl(98955545, {
-        validators: [Validators.required, Validators.maxLength(10)],
+      phone: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(10)],
       }),
-      status: new FormControl('recovered', {
+      status: new FormControl(null, {
         validators: [Validators.required],
       }),
     });
-
-    console.log('Values', this.form.value);
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('patientId')) {
@@ -88,12 +95,10 @@ export class AddPatientComponent implements OnInit {
     }
 
     if (this.mode === 'add') {
-      this.patientService.addPatient(
-        this.form.value
-      );
+      this.patientService.addPatient(this.form.value);
     } else {
       this.patientService.updatePatient(this.patientId, this.form.value);
     }
-    // this.form.reset()
+    this.form.reset();
   }
 }

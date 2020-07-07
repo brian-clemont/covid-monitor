@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxChartsModule } from '@swimlane/ngx-charts'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { HeaderComponent } from './components/header/header.component';
 import { ListPatientsComponent } from './components/list-patients/list-patients.component';
+import { DataVisualComponent } from './components/data-visual/data-visual.component';
 
 @NgModule({
   declarations: [
@@ -27,12 +29,14 @@ import { ListPatientsComponent } from './components/list-patients/list-patients.
     AddPatientComponent,
     HeaderComponent,
     ListPatientsComponent,
+    DataVisualComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    NgxChartsModule,
     MatCardModule,
     MatInputModule,
     MatCardModule,

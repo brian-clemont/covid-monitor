@@ -9,14 +9,16 @@
       >
     </mat-form-field>
     <mat-form-field>
-      <textarea
-        matInput
-        rows="4"
-        placeholder="Address"
-        formControlName="address"
-      ></textarea>
+      <mat-label>Address</mat-label>
+      <mat-select formControlName="address">
+        <mat-option
+          *ngFor="let address of addresses"
+          [value]="address.address"
+          >{{ address.address | uppercase }}</mat-option
+        >
+      </mat-select>
       <mat-error *ngIf="form.get('address').invalid"
-        >Please Enter Address</mat-error
+        >Please Select Address</mat-error
       >
     </mat-form-field>
     <mat-form-field>
@@ -37,7 +39,7 @@
     <mat-form-field>
       <input
         matInput
-        type="number"
+        type="tel"
         placeholder="Phone Number"
         formControlName="phone"
       />
@@ -46,7 +48,7 @@
       >
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Select</mat-label>
+      <mat-label>Status</mat-label>
       <mat-select formControlName="status">
         <mat-option
           *ngFor="let status of patientStatus"
@@ -54,8 +56,16 @@
           >{{ status.status | uppercase }}</mat-option
         >
       </mat-select>
+      <mat-error *ngIf="form.get('status').invalid"
+        >Please Select Status</mat-error
+      >
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid"
+    >
       Save
     </button>
   </form>

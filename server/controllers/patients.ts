@@ -11,8 +11,6 @@ export let addPatient = (req, res, next) => {
     status: req.body.status,
   });
 
-  console.log('PAt OBJ', patient);
-
   patient
     .save()
     .then((createdPatient) => {
