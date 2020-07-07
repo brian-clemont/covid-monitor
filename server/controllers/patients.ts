@@ -1,11 +1,7 @@
 import Patient from '../models/patient';
 
 export let addPatient = (req, res, next) => {
-  console.log(req.body.name);
-  console.log(req.body.address);
-  console.log(req.body.age);
-  console.log(req.body.familyCount);
-  console.log(req.body.status);
+
   let patient = new Patient({
     name: req.body.name,
     address: req.body.address,
@@ -67,14 +63,17 @@ export let getSelectedPatient = (req, res, next) => {
 };
 
 export let updatePatient = (req, res, next) => {
+
   let patient = new Patient({
-    _id: req.body.id,
+    _id: req.params.id,
+    name: req.body.name,
     address: req.body.address,
     age: req.body.age,
     familyCount: req.body.familyCount,
     phone: req.body.phone,
     status: req.body.status,
   });
+
   Patient.updateOne({ _id: req.params.id }, patient)
     .then((updatedPatient) => {
       if (updatedPatient.n > 0) {
@@ -90,6 +89,7 @@ export let updatePatient = (req, res, next) => {
     .catch((error) => {
       res.status(500).json({
         message: "Couldn't Update Patient",
+        error: error,
       });
     });
 };

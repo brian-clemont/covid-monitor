@@ -12,7 +12,7 @@ import { Patient } from '../patient.model';
 export class AddPatientComponent implements OnInit {
   form: FormGroup;
   patient: Patient;
-  private mode = 'create';
+  mode = 'add';
   patientId: string;
   patientStatus = [
     { id: 1, status: 'mild' },
@@ -48,6 +48,8 @@ export class AddPatientComponent implements OnInit {
       }),
     });
 
+    console.log('Values', this.form.value);
+
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('patientId')) {
         this.mode = 'edit';
@@ -62,7 +64,7 @@ export class AddPatientComponent implements OnInit {
               age: patientData.age,
               familyCount: patientData.familyCount,
               phone: patientData.phone,
-              status: patientData.status
+              status: patientData.status,
             };
             this.form.setValue({
               name: this.patient.name,
@@ -73,9 +75,9 @@ export class AddPatientComponent implements OnInit {
               status: this.patient.status,
             });
           });
-      }else{
-        this.mode ='create';
-        this.patientId=null
+      } else {
+        this.mode = 'add';
+        this.patientId = null;
       }
     });
   }
@@ -84,15 +86,14 @@ export class AddPatientComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    console.log(this.form);
-    this.patientService.addPatient(
-      this.form.value.name,
-      this.form.value.address,
-      this.form.value.age,
-      this.form.value.familyCount,
-      this.form.value.phone,
-      this.form.value.status
-    );
+
+    if (this.mode === 'add') {
+      this.patientService.addPatient(
+        this.form.value
+      );
+    } else {
+      this.patientService.updatePatient(this.patientId, this.form.value);
+    }
     // this.form.reset()
   }
 }

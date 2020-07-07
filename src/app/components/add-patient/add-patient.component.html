@@ -1,4 +1,6 @@
 <mat-card>
+  <h2 *ngIf="mode === 'edit'">Edit Patient</h2>
+  <h2 *ngIf="mode === 'add'">Add Patient</h2>
   <form [formGroup]="form" (submit)="onSavePatient()">
     <mat-form-field>
       <input matInput type="text" placeholder="Name" formControlName="name" />
@@ -40,7 +42,7 @@
         formControlName="phone"
       />
       <mat-error *ngIf="form.get('phone').invalid"
-        >Please Enter Count</mat-error
+        >Please Enter Phone Number</mat-error
       >
     </mat-form-field>
     <mat-form-field>

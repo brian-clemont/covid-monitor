@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
+import { Form } from '@angular/forms';
 
 const BACKEND_URL = environment.apiUrl + '/patients/';
 @Injectable({
@@ -15,33 +16,9 @@ export class PatientService {
   private patientsUpdated = new Subject<{ patients: Patient[] }>();
   constructor(private http: HttpClient, private router: Router) {}
 
-  addPatient(
-    name: string,
-    address: string,
-    age: number,
-    familyCount: number,
-    phone: number,
-    status: string
-  ) {
-    let patientData: Patient | FormData;
-    patientData = new FormData();
-    patientData.append('name', name);
-    patientData.append('address', address);
-    patientData.append('age', age.toString());
-    patientData.append('familyCount', familyCount.toString());
-    patientData.append('phone', phone.toString());
-    patientData.append('status', status);
-
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
-    });
-    let options = { headers: headers };
+  addPatient(form: Form) {
     this.http
-      .post<{ message: string; patient: Patient }>(
-        BACKEND_URL,
-        patientData,
-        options
-      )
+      .post<{ message: string; patient: Patient }>(BACKEND_URL, form)
       .subscribe((patientData) => {
         console.log(patientData);
       });
@@ -60,7 +37,7 @@ export class PatientService {
                 address: patient.address,
                 age: patient.age,
                 familyCount: patient.familyCount,
-                phone:patient.phone,
+                phone: patient.phone,
                 status: patient.status,
               };
             }),
@@ -87,24 +64,9 @@ export class PatientService {
     }>(BACKEND_URL + id);
   }
 
-  updatePatient(
-    id: string,
-    name: string,
-    address: string,
-    age: any,
-    familyCount: any,
-    phone: any,
-    status: string
-  ) {
-    let patientData: Patient | FormData;
-    patientData = new FormData();
-    patientData.append('name', name);
-    patientData.append('address', address);
-    patientData.append('age', age);
-    patientData.append('familyCount', familyCount);
-    patientData.append('phone', phone);
-    patientData.append('status', status);
-    this.http.put(BACKEND_URL + id, patientData).subscribe((response) => {
+  updatePatient(id: string, form: Form) {
+    console.log('id', id);
+    this.http.put(BACKEND_URL + id, form).subscribe((response) => {
       this.router.navigate(['/']);
     });
   }
