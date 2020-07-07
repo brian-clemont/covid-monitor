@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "covid related patients data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+    "start:watch": "nodemon",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/mongoose": "^5.7.29",
+    "@types/node": "^14.0.14",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "eslint": "^7.4.0",
+    "eslint-plugin-import": "^2.22.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.21",
+    "mongoose-unique-validator": "^2.0.3",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  }
+}

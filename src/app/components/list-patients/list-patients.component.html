@@ -1,0 +1,34 @@
+<mat-accordion multi="true">
+  <mat-expansion-panel *ngFor="let patient of patients" >
+    <mat-expansion-panel-header>
+      <h4>
+        {{ patient.name }}
+      </h4>
+    </mat-expansion-panel-header>
+    <div class="patient-data">
+      <ul>
+        <li><strong>Phone: </strong>{{ patient.phone }}</li>
+        <li><strong>Address: </strong>{{ patient.address }}</li>
+        <li><strong>Age: </strong>{{ patient.age }}</li>
+        <li><strong>Family Count: </strong>{{ patient.familyCount }}</li>
+        <li>
+          <strong>Status: </strong>
+          <strong>{{ patient.status }}</strong>
+        </li>
+      </ul>
+    </div>
+
+    <mat-action-row>
+      <button mat-button color="primary">
+        <a [routerLink]="['/edit', patient.id]">Edit</a>
+      </button>
+      <button mat-button color="warn" (click)="onDelete(patient.id)">
+        Delete
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<p class="info-text mat-body-1" *ngIf="patients.length===0">
+  No patient added yet
+</p>

@@ -1,0 +1,10 @@
+{
+  "ignore": ["**/*.test.ts", "**/*.spec.ts", ".git", "node_modules"],
+  "watch": ["src", "src/*.ts","models","routes","controllers"],
+  "exec": "npm start",
+  "ext": "ts",
+
+  "env": {
+    "MONGO_ATLAS_PW": "covidAdmin"
+  }
+}
